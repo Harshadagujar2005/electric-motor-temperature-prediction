@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Electric Motor Temperature Prediction</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 40px;
+        }
+        form {
+            margin: 20px auto;
+            width: 300px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+        }
+        button {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #444;
+        }
+        .result {
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Electric Motor Temperature Prediction</h2>
+    <p>Enter values to get the predicted rotor temperature.</p>
+
+    <form id="predictionForm">
+        <input type="text" name="ambient_temp" placeholder="Ambient temperature"><br>
+        <input type="text" name="coolant_temp" placeholder="Coolant temperature"><br>
+        <input type="text" name="voltage_d" placeholder="Voltage d-component"><br>
+        <input type="text" name="voltage_q" placeholder="Voltage q-component"><br>
+        <input type="text" name="motor_speed" placeholder="Motor speed"><br>
+        <input type="text" name="current_d" placeholder="Current d-component"><br>
+        <input type="text" name="current_q" placeholder="Current q-component"><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="result" class="result"></div>
+
+    <script>
+        document.getElementById("predictionForm").addEventListener("submit", function(e){
+            e.preventDefault(); // stop refresh
+
+            let formData = new FormData(this);
+            let data = {};
+            formData.forEach((value, key) => data[key] = value);
+
+            fetch("http://127.0.0.1:5000/predict", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data)
+})
+
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById("result").innerHTML = result.prediction;
+            })
+            .catch(error => {
+                document.getElementById("result").innerHTML = "Error: " + error;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,9 +1,3 @@
-# electric-motor-temperature-prediction
-Machine Learning project for predicting electric motor rotor temperature using sensor data.  Implements Linear Regression, Decision Tree, Random Forest, and SVM.  Best model deployed with Flask web app.
-
-
-![alt text](c.11-1.PNG) ![alt text](c1.2-1.PNG) ![alt text](c1.3-1.PNG)
-
 # 🔥 Electric Motor Temperature Prediction
 
 This project predicts the **rotor temperature of an electric motor** using various Machine Learning algorithms:
